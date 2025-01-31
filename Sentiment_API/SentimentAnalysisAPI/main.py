@@ -1,5 +1,8 @@
 ﻿import logging
-from fastapi import FastAPI, HTTPException, Depends,Request
+import time
+import csv
+import uuid
+from fastapi import FastAPI, HTTPException, Depends, Request
 from pydantic import BaseModel
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.orm import sessionmaker, declarative_base
@@ -24,7 +27,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 # Database Setup
 DATABASE_URL = "sqlite:///./database.db"
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+engine = create_engine(DATABASE_URL, echo=True, connect_args={"check_same_thread": False})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
@@ -70,24 +73,38 @@ def verify_jwt_token(token: str):
 # Login Route to Generate JWT Token
 @app.post("/login")
 def login(user: UserLogin):
-    # Hardcoded example credentials (Replace with database validation)
     if user.username == "admin" and user.password == "password":
         token = create_jwt_token({"sub": user.username})
         return {"access_token": token, "token_type": "bearer"}
     raise HTTPException(status_code=401, detail="Invalid username or password")
 
+# Function to log metrics
+def log_metrics(request_id, user_id, review_text, sentiment, confidence, execution_time):
+    with open("metrics.csv", mode="a", newline="") as file:
+        writer = csv.writer(file)
+        writer.writerow([
+            datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            request_id,
+            user_id,
+            review_text,
+            sentiment,
+            confidence,
+            execution_time
+        ])
+
 # Protected Route - Requires Token
 @app.post("/analyze/")
 def analyze_sentiment(review: Review, request: Request):
-    # Extract the token from the Authorization header
+    start_time = time.time()
+    request_id = str(uuid.uuid4())
+
     authorization: str = request.headers.get("Authorization")
     if not authorization:
         raise HTTPException(status_code=401, detail="Authorization token is missing")
     
-    token = authorization.split(" ")[1]  # Assuming the header is like "Bearer <token>"
-    user_payload = verify_jwt_token(token)  # Verify the token and extract user data
-
-    # Now, proceed with sentiment analysis
+    token = authorization.split(" ")[1]  # Extract token from header
+    user_payload = verify_jwt_token(token)  # Verify JWT
+    
     analysis = TextBlob(review.review_text)
     sentiment = "positive" if analysis.sentiment.polarity > 0 else "negative" if analysis.sentiment.polarity < 0 else "neutral"
     confidence = abs(analysis.sentiment.polarity) * 100
@@ -99,9 +116,12 @@ def analyze_sentiment(review: Review, request: Request):
     db.refresh(feedback)
     db.close()
 
-    logger.info(f"Sentiment Analysis: {review.review_text} -> {sentiment} ({confidence}%)")
+    execution_time = round(time.time() - start_time, 4)
+    log_metrics(request_id, review.user_id, review.review_text, sentiment, confidence, execution_time)
 
-    return {"user_id": review.user_id, "sentiment": sentiment, "confidence": confidence}
+    logger.info(f"Request ID: {request_id} | Sentiment Analysis: {review.review_text} -> {sentiment} ({confidence}%) | Execution Time: {execution_time}s")
+
+    return {"request_id": request_id, "user_id": review.user_id, "sentiment": sentiment, "confidence": confidence, "execution_time": execution_time}
 
 @app.get("/")
 def read_root():
