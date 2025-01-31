@@ -1,90 +1,102 @@
 # Sentiment Analysis API
 
-## Overview
-This project is a **Sentiment Analysis API** built using **FastAPI**. It provides an endpoint to analyze the sentiment of given text data. The API leverages **TextBlob** for natural language processing and sentiment analysis. Authentication is implemented using **JWT tokens**, and **SQLAlchemy** is used for database interactions.
+Welcome to the **Sentiment Analysis API**! 🚀 This API allows you to analyze the sentiment of text using **FastAPI**, **TextBlob**, and **SQLAlchemy** for managing user authentication and database operations.
 
-## Features
-- **User Authentication**: Secure login and JWT-based authentication.
-- **Sentiment Analysis**: Analyze the sentiment of text (Positive, Negative, Neutral) using TextBlob.
-- **Database Integration**: Uses SQLAlchemy for managing user and text history.
-- **Token-based Security**: Ensures secure API access with JWT tokens.
-
-## Technologies Used
-- **FastAPI**: For building the web framework.
-- **SQLAlchemy**: For database management.
-- **TextBlob**: For sentiment analysis.
-- **PyJWT**: For handling authentication tokens.
-- **Uvicorn**: ASGI server to run FastAPI.
+## What i have added into the task according to the requirements :
+- **User Authentication**: Secure login using JWT tokens
+- **Sentiment Analysis**: Analyze text sentiment (positive, neutral, negative)
+- **FastAPI-based**: High-performance and easy-to-use REST API
+- **Database Integration**: Uses **SQLAlchemy** for data management
 
 ## Installation
-### Prerequisites
-Ensure you have **Python 3.9+** installed.
+To set up and run this project, follow these steps:
 
-### Steps
-1. Clone the repository:
-   ```sh
-   git clone https://github.com/Nikkidesigner/Sentiment-Analysis-API.git
-   cd Sentiment-Analysis-API
-   ```
-
-2. Create a virtual environment:
-   ```sh
-   python -m venv venv
-   ```
-
-3. Activate the virtual environment:
-   - Windows:
-     ```sh
-     venv\Scripts\activate
-     ```
-   - Mac/Linux:
-     ```sh
-     source venv/bin/activate
-     ```
-
-4. Install dependencies:
-   ```sh
-   pip install -r requirements.txt
-   ```
-
-## Usage
-### Running the API
-Start the server using:
-```sh
-uvicorn main:app --reload
+### 1. Clone the Repository
+```bash
+$ git clone https://github.com/Nikkidesigner/Sentiment-Analysis-API.git
+$ cd Sentiment-Analysis-API
 ```
-The API will be available at: **http://127.0.0.1:8000**
 
-### Endpoints
-#### 1. **User Authentication**
-- **Login**: `POST /login`
-- **Register**: `POST /register`
+### 2. Create and Activate a Virtual Environment
+```bash
+# Windows
+$ python -m venv venv
+$ venv\Scripts\activate
 
-#### 2. **Sentiment Analysis**
-- **Analyze Sentiment**: `POST /analyze`
-  - **Request Body:**
-    ```json
-    {
-      "text": "I love FastAPI!"
-    }
-    ```
-  - **Response:**
-    ```json
-    {
-      "sentiment": "Positive",
-      "polarity": 0.9
-    }
-    ```
+# macOS/Linux
+$ python -m venv venv
+$ source venv/bin/activate
+```
 
-## Deployment
-To deploy the API, you can use **Docker**, **AWS**, or **Heroku**.
+### 3. Install Dependencies
+```bash
+$ pip install -r requirements.txt
+```
 
-## Contributing
-Feel free to fork this repository and submit pull requests for improvements.
+### 4. Run the API Server
+```bash
+$ uvicorn main:app --reload
+```
+The API will be running at **http://127.0.0.1:8000**.
 
-## License
-This project is open-source and available under the **MIT License**.
+## API Endpoints
 
----
-_Developed by [Nikkidesigner](https://github.com/Nikkidesigner)_
+### 1. User Login (JWT Authentication)
+**POST** `/login`
+```json
+{
+  "username": "admin",
+  "password": "password"
+}
+```
+_Response:_
+```json
+{
+  "access_token": "your_jwt_token",
+  "token_type": "bearer"
+}
+```
+
+### 2. Sentiment Analysis
+**POST** `/analyze`
+#### Headers:
+```json
+{
+  "Authorization": "Bearer your_jwt_token"
+}
+```
+#### Request Body:
+```json
+{
+  "text": "I love this product!"
+}
+```
+_Response:_
+```json
+{
+  "sentiment": "positive"
+}
+```
+#### Request Body:
+```json
+{
+  "text": "I did not like the flavour!"
+}
+```
+_Response:_
+```json
+{
+  "sentiment": "negative"
+}
+```
+
+## How to Use in Postman
+1. **Login** using `/login` to get a JWT token.
+2. **Copy the access token** from the response.
+3. **Go to the `/analyze` endpoint**, click on **Authorization** in Postman.
+4. Select **Bearer Token** and paste your copied token.
+5. Send the request with a text input.
+
+
+> Created by **Nikhil Pawar** ✨
 
