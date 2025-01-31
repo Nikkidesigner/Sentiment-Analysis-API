@@ -97,6 +97,30 @@ _Response:_
 4. Select **Bearer Token** and paste your copied token.
 5. Send the request with a text input.
 
+## Postman API Testing
+
+### 1. Generating Token in Postman
+To generate a JWT token, send a `POST` request to `/login` with valid credentials.
+
+![generate_token](https://github.com/user-attachments/assets/d9641fd1-65f4-485c-bbdf-7252c7521169)
+
+---
+
+### 2. Using the Token in `/analyze` Route
+After receiving the token, include it in the `Authorization` header as `Bearer <your_token>`.
+
+
+![token input](https://github.com/user-attachments/assets/00353177-7d89-40fd-988b-804e5680e5c9)
+
+---
+
+### 3. Sending a Post Request to `/analyze`
+Now, send a `POST` request to `/analyze` with a review text. The response will contain the sentiment analysis result.
+
+
+![post request](https://github.com/user-attachments/assets/ffd19ad9-180c-4147-9dcd-de16576c1f3b)
+
+
 
 > Created by **Nikhil Pawar** ✨
 
