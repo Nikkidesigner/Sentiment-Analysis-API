@@ -1,0 +1,6 @@
+﻿fastapi
+uvicorn
+sqlalchemy
+textblob
+pyjwt
+pydantic
