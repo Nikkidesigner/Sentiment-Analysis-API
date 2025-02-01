@@ -4,7 +4,7 @@ import time
 import csv
 import pytest
 
-# Enable pytest-asyncio
+# Enable pytest-asyncio 
 pytest_plugins = "pytest_asyncio"
 
 # API URL
@@ -16,7 +16,7 @@ HEADERS = {
     "Authorization": "Bearer <enter the token>"
 }
 
-# Function to read reviews from CSV
+# Function to read reviews from CSV here i have used csv module.
 def read_reviews_from_csv(file_path):
     reviews = []
     with open(file_path, mode="r", encoding="utf-8") as file:
@@ -31,7 +31,7 @@ async def send_request(review):
         response = await client.post(API_URL, json=review, headers=HEADERS, timeout=30)
         return response.status_code, response.json()
 
-# Main test function using pytest
+# Main test function using pytest 
 @pytest.mark.asyncio
 async def test_performance():
     start_time = time.time()

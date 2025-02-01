@@ -19,7 +19,7 @@ logger = logging.getLogger(__name__)
 app = FastAPI()
 
 # Secret key for JWT
-SECRET_KEY = "your_secret_key_here"
+SECRET_KEY = "NikhilPawar_wdawdasdadwecacwecascc"
 ALGORITHM = "HS256"
 
 # Password hashing
