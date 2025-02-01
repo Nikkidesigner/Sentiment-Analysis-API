@@ -237,6 +237,17 @@ These dependencies ensure:
 - Performance tests execute without issues.
 
 ---
+## Referenece tutorials I used :
+
+- Working with JWTs in Python (https://youtu.be/VRn8cPc7B_w?si=i4QJOp-rvmJPWwf8)
+- Exploring Sentiment Analysis using TextBlob (https://youtu.be/wfFTjQckbdA?si=KWZ8RZIqvNfG9z7S)
+- FastAPI Creating Models using Pydantic (https://youtu.be/GkrDmUEEEtM?si=DLn8ulx6jNZ_UUtf)
+- How to Work with CSV Files in Python (https://youtu.be/sfTUVXfC0X0?si=KBRwmfsrlsCxP7LS)
+- Python : Adding/Appending Data to CSV Files (https://youtu.be/sHf0CJU8y7U?si=SvWuc56Tme9YGci5)
+- FastAPI MySQL REST API in Python | CRUD Operations | SQLAlchemy (https://youtu.be/4Zy90rd0bkU?si=L1HfYQ8S44pfrL4Y)
+- Testing Our Application with Pytest and Pytest-Asyncio (https://youtu.be/fsRE5xflofI?si=9HqZNIVtKqm92jYb)
+- HTTPX Tutorial - A next-generation HTTP client for Python (https://youtu.be/qAh5dDODJ5k?si=W4Z7tyiNTmnlTQ3W)
+
 
 ## 🎯 Final Thoughts
 By following these steps, I successfully tested API performance while ensuring correctness and efficiency. The setup allows for **scalable testing** and **real-time sentiment tracking**.
