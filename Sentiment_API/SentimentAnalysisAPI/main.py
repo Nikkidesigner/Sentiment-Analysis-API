@@ -11,12 +11,31 @@ import jwt
 import datetime
 from jwt.exceptions import ExpiredSignatureError, InvalidTokenError
 from passlib.context import CryptContext
+from fastapi.middleware.cors import CORSMiddleware
+
+
+origins = [
+    "http://localhost:3000/login",
+    "http://localhost:3000/analyze",
+    "http://localhost:3000"
+]
 
 # Logging setup
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
 
 app = FastAPI()
+
+
+#middleware 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
+
 
 # Secret key for JWT
 SECRET_KEY = "NikhilPawar_wdawdasdadwecacwecascc"
@@ -54,7 +73,7 @@ class UserLogin(BaseModel):
     password: str
 
 # Function to create JWT token
-def create_jwt_token(data: dict, expires_delta: int = 60):
+def create_jwt_token(data: dict, expires_delta: int = 60*24):
     expire = datetime.datetime.utcnow() + datetime.timedelta(minutes=expires_delta)
     to_encode = data.copy()
     to_encode.update({"exp": expire})
