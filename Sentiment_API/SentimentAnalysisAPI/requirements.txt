@@ -9,5 +9,4 @@ pytest
 pytest-asyncio
 passlib
 bcrypt
-csv
 asyncio
