@@ -17,7 +17,8 @@ from fastapi.middleware.cors import CORSMiddleware
 origins = [
     "http://localhost:3000/login",
     "http://localhost:3000/analyze",
-    "http://localhost:3000"
+    "http://localhost:3000",
+    "https://sentiment-frontend-dun.vercel.app"
 ]
 
 # Logging setup
@@ -38,7 +39,8 @@ app.add_middleware(
 
 
 # Secret key for JWT
-SECRET_KEY = "NikhilPawar_wdawdasdadwecacwecascc"
+SECRET_KEY = "MYSerjnjdnfjfenvjernvjiernvjenrvjnervjnerjvnerjnv"
+
 ALGORITHM = "HS256"
 
 # Password hashing
